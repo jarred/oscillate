@@ -11,7 +11,7 @@
       _.bindAll(this);
       this.$el = $(this.el);
       this.model = new Backbone.Model(JSON.parse(this.$('pre.json').html()));
-      SC.whenStreamingReady(this.initPlayer);
+      this.initPlayer();
       this.initSlides();
     },
     initSlides: function() {
@@ -36,12 +36,11 @@
         t = slide.time_till.split(':');
         milli += t[1] * 1000;
         milli += t[0] * 60000;
-        console.log(milli);
         slide.time_till_milli = milli;
         slide.index = index;
       });
-      console.log(this.model.toJSON());
       this.$('.presentation').html(oscillate.Templates.presentation(this.model.toJSON()));
+      this.ready();
       this.showSlide(0);
     },
     showSlide: function(n) {
@@ -57,12 +56,17 @@
       });
     },
     ready: function() {
+      var ok;
+      ok = 0;
       if (this.interviewSC != null) {
         this.$el.removeClass('loading');
-        console.log(this.interviewSC);
+        ok++;
       }
-      this.$('.play-pause').addClass('paused');
-      this.$('.play-pause').bind('click', this.play);
+      if (this.model.get('presentation') != null) ok++;
+      if (ok > 1) {
+        this.$('.play-pause').addClass('paused');
+        this.$('.play-pause').bind('click', this.play);
+      }
     },
     play: function(e) {
       e.preventDefault();

@@ -6,9 +6,9 @@ oscillate.Views.Audio = Backbone.View.extend
     _.bindAll @
     @$el = $(@el)
     @model = new Backbone.Model JSON.parse @$('pre.json').html()
-    # console.log '@model', @model.toJSON()
-    SC.whenStreamingReady @initPlayer
-    @initSlides()
+    # SC.whenStreamingReady @initPlayer
+    @initPlayer()
+    @initSlides()    
     return
 
   initSlides: ->
@@ -30,13 +30,11 @@ oscillate.Views.Audio = Backbone.View.extend
       t = slide.time_till.split ':'
       milli += t[1] * 1000
       milli += t[0] * 60000
-      console.log milli
       slide.time_till_milli = milli
       slide.index = index
       return
-    console.log @model.toJSON()
     @$('.presentation').html oscillate.Templates.presentation @model.toJSON()
-
+    @ready()
     @showSlide(0)
     return
 
@@ -54,12 +52,15 @@ oscillate.Views.Audio = Backbone.View.extend
     return
 
   ready: ->
+    ok = 0
     if @interviewSC?
       @$el.removeClass 'loading'
-      console.log @interviewSC
-
-    @$('.play-pause').addClass 'paused'
-    @$('.play-pause').bind 'click', @play
+      ok++
+    if @model.get('presentation')?
+      ok++
+    if ok > 1
+      @$('.play-pause').addClass 'paused'
+      @$('.play-pause').bind 'click', @play
     return
 
   play: (e) ->
