@@ -45,7 +45,7 @@ oscillate.Views.Audio = Backbone.View.extend
     return
 
   initPlayer: ->
-    SC.stream @model.get('interview'), (sound) =>
+    SC.stream "/tracks/#{@model.get('interview')}", (sound) =>
       @interviewSC = sound
       @initSlides()
       return

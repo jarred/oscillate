@@ -49,7 +49,7 @@
     },
     initPlayer: function() {
       var _this = this;
-      SC.stream(this.model.get('interview'), function(sound) {
+      SC.stream("/tracks/" + (this.model.get('interview')), function(sound) {
         _this.interviewSC = sound;
         _this.initSlides();
       });

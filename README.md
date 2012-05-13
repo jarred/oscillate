@@ -19,3 +19,12 @@ interview: /tracks/36137744 (this is a soundcloud track ID)
 slides: /json/2012-05-13-stamps.json (this is a json file containing the images and timing info)
 ---
 ```
+
+
+### Getting a track ID from a soundcloud url.
+
+Unfortunately this bit is a little manual/annoying. [Go here](http://api.soundcloud.com/resolve.json?url=PUT_SOUNDCLOUD_TRACK_URL_HERE&client_id=d47b942351e59deb9ec38d90a15beb81) and then replace the __PUT\_SOUNDCLOUD\_TRACK\_URL\_HERE__ with your url. You'll be redirected to a json page with info about the track, where you can find the ID.
+
+```
+http://api.soundcloud.com/resolve.json?url=PUT_SOUNDCLOUD_TRACK_URL_HERE&client_id=d47b942351e59deb9ec38d90a15beb81
+```
