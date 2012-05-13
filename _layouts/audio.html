@@ -24,12 +24,17 @@
     <article>
       <h1>{{ page.title }}</h1>
 
-      <div id="av" class="extend" data-view="Audio">
+      <div id="av" class="extend loading" data-view="Audio">
         <pre class="json">
-          {{ page | json }}
+{
+  "interview":"{{ page.mp3}}"
+}
         </pre>
         <section class="presentation"></section>
-        <section class="controls"></section>
+        <section class="controls">
+          <a href="#" class="play-pause"></a>
+          <span class="time">--:--</span>
+        </section>
       </div>
 
       {{ content }}

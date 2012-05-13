@@ -73,7 +73,41 @@ header#main {
   margin-bottom: 40px; }
 
 article > #av {
+  position: relative;
   width: 800px;
-  height: 600px;
-  background: #000;
-  margin: 20px 0px; }
+  margin: 20px 0px;
+  height: 600px; }
+  article > #av > .presentation {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    height: 560px;
+    background: #222;
+    z-index: 1; }
+  article > #av > .controls {
+    height: 40px;
+    position: absolute;
+    border-top: 1px solid #DDD;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 2; }
+    article > #av > .controls > a.play-pause {
+      position: absolute;
+      display: block;
+      text-decoration: none;
+      width: 40px;
+      height: 40px;
+      border-right: 1px solid #DDD;
+      background: url("../images/icon-pause.png") no-repeat center center; }
+      article > #av > .controls > a.play-pause.paused {
+        background: url("../images/icon-play.png") no-repeat center center; }
+    article > #av > .controls > .time {
+      display: inline-block;
+      position: absolute;
+      left: 56px;
+      top: 0px;
+      line-height: 40px; }
+  article > #av.loading a.play-pause {
+    background: url("../images/loading.audio.gif") no-repeat center center !important; }
