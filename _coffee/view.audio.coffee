@@ -34,8 +34,9 @@ oscillate.Views.Audio = Backbone.View.extend
       slide.index = index
       return
     @$('.presentation').html oscillate.Templates.presentation @model.toJSON()
-    @ready()
+
     @showSlide(0)
+    @ready()
     return
 
   showSlide: (n) ->
@@ -70,7 +71,7 @@ oscillate.Views.Audio = Backbone.View.extend
     @$('.play-pause').unbind 'click', @play
     @$('.play-pause').bind 'click', @togglePlayback
     @interviewSC.play()
-    @int = setInterval @playback, 500
+    @int = setInterval @playback, 300
     return
 
   togglePlayback: (e) ->
@@ -86,12 +87,6 @@ oscillate.Views.Audio = Backbone.View.extend
 
   playback: ->
     position = @interviewSC.position
-    slide = _.find @model.get('presentation').slides, (slide) =>
-      return position < slide.time_till_milli
-    
-    if @currentSlide != slide
-      @showSlide slide.index
-
     x = position / 1000
     seconds = x % 60 | 0
     x /= 60
@@ -103,4 +98,10 @@ oscillate.Views.Audio = Backbone.View.extend
     if minutes.length <= 1
       minutes = "0#{minutes}"
     @$('.time').html "#{minutes}:#{seconds}"
+
+    slide = _.find @model.get('presentation').slides, (slide) =>
+      return position < slide.time_till_milli
+    
+    if @currentSlide != slide
+      @showSlide slide.index
     return

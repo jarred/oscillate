@@ -40,8 +40,8 @@
         slide.index = index;
       });
       this.$('.presentation').html(oscillate.Templates.presentation(this.model.toJSON()));
-      this.ready();
       this.showSlide(0);
+      this.ready();
     },
     showSlide: function(n) {
       this.$('.presentation .slide').removeClass('visible');
@@ -74,7 +74,7 @@
       this.$('.play-pause').unbind('click', this.play);
       this.$('.play-pause').bind('click', this.togglePlayback);
       this.interviewSC.play();
-      this.int = setInterval(this.playback, 500);
+      this.int = setInterval(this.playback, 300);
     },
     togglePlayback: function(e) {
       var $el;
@@ -92,10 +92,6 @@
       var minutes, position, seconds, slide, x,
         _this = this;
       position = this.interviewSC.position;
-      slide = _.find(this.model.get('presentation').slides, function(slide) {
-        return position < slide.time_till_milli;
-      });
-      if (this.currentSlide !== slide) this.showSlide(slide.index);
       x = position / 1000;
       seconds = x % 60 | 0;
       x /= 60;
@@ -105,6 +101,10 @@
       if (seconds.length <= 1) seconds = "0" + seconds;
       if (minutes.length <= 1) minutes = "0" + minutes;
       this.$('.time').html("" + minutes + ":" + seconds);
+      slide = _.find(this.model.get('presentation').slides, function(slide) {
+        return position < slide.time_till_milli;
+      });
+      if (this.currentSlide !== slide) this.showSlide(slide.index);
     }
   });
 
