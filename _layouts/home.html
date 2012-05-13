@@ -11,12 +11,24 @@
   <title>oscillate</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
+  <div id="all">
+    {% include header.html %}
+
+    <section id="posts">
+      {% for post in site.posts %}
+        <a href="{{ post.url }}">{{ post.title }}</a>
+        <p class="excerpt">{{ post.excerpt }}</p>
+      {% endfor %}
+    </section>
+  </div>
+
+  {% include js.html %}
 <body>
 </html>
