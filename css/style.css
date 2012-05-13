@@ -78,17 +78,39 @@ article > #av {
   margin: 20px 0px;
   height: 600px; }
   article > #av > .presentation {
-    position: absolute;
+    position: relative;
     top: 0px;
     right: 0px;
     left: 0px;
     height: 560px;
     background: #222;
-    z-index: 1; }
+    z-index: 1;
+    color: #FFF; }
+    article > #av > .presentation > .slide {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 1px;
+      height: 1px;
+      opacity: 0; }
+      article > #av > .presentation > .slide > .image {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        bottom: 10px;
+        right: 10px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: top left; }
+      article > #av > .presentation > .slide.visible {
+        width: auto;
+        height: auto;
+        opacity: 1;
+        right: 0px;
+        bottom: 0px; }
   article > #av > .controls {
     height: 40px;
     position: absolute;
-    border-top: 1px solid #DDD;
     left: 0px;
     right: 0px;
     bottom: 0px;

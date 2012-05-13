@@ -6,14 +6,49 @@ oscillate.Views.Audio = Backbone.View.extend
     _.bindAll @
     @$el = $(@el)
     @model = new Backbone.Model JSON.parse @$('pre.json').html()
-    # @initPlayer()
+    # console.log '@model', @model.toJSON()
     SC.whenStreamingReady @initPlayer
+    @initSlides()
+    return
+
+  initSlides: ->
+    $.ajax
+      url: @model.get('slides')
+      dataType: 'JSON'      
+      success: @renderSlides
+      error: () =>
+        console.log 'error', arguments
+        return
+    return
+
+  renderSlides: (data) ->
+    @model.set
+      presentation: data
+
+    _.each @model.get('presentation').slides, (slide, index) =>
+      milli = 0
+      t = slide.time_till.split ':'
+      milli += t[1] * 1000
+      milli += t[0] * 60000
+      console.log milli
+      slide.time_till_milli = milli
+      slide.index = index
+      return
+    console.log @model.toJSON()
+    @$('.presentation').html oscillate.Templates.presentation @model.toJSON()
+
+    @showSlide(0)
+    return
+
+  showSlide: (n) ->
+    @$('.presentation .slide').removeClass 'visible'
+    @$(".presentation .slide[data-index='#{n}']").addClass 'visible'
+    @currentSlide = @model.get('presentation').slides[n]
     return
 
   initPlayer: ->
     SC.stream @model.get('interview'), (sound) =>
       @interviewSC = sound
-      # @interviewSC.play()
       @ready()
       return
     return
@@ -28,12 +63,13 @@ oscillate.Views.Audio = Backbone.View.extend
     return
 
   play: (e) ->
+    # @showSlide 0
     e.preventDefault()
     @$('.play-pause').removeClass 'paused'
     @$('.play-pause').unbind 'click', @play
     @$('.play-pause').bind 'click', @togglePlayback
     @interviewSC.play()
-    @int = setInterval @playback, 300
+    @int = setInterval @playback, 500
     return
 
   togglePlayback: (e) ->
@@ -49,6 +85,12 @@ oscillate.Views.Audio = Backbone.View.extend
 
   playback: ->
     position = @interviewSC.position
+    slide = _.find @model.get('presentation').slides, (slide) =>
+      return position < slide.time_till_milli
+    
+    if @currentSlide != slide
+      @showSlide slide.index
+
     x = position / 1000
     seconds = x % 60 | 0
     x /= 60

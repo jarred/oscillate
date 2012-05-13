@@ -12,6 +12,42 @@
       this.$el = $(this.el);
       this.model = new Backbone.Model(JSON.parse(this.$('pre.json').html()));
       SC.whenStreamingReady(this.initPlayer);
+      this.initSlides();
+    },
+    initSlides: function() {
+      var _this = this;
+      $.ajax({
+        url: this.model.get('slides'),
+        dataType: 'JSON',
+        success: this.renderSlides,
+        error: function() {
+          console.log('error', arguments);
+        }
+      });
+    },
+    renderSlides: function(data) {
+      var _this = this;
+      this.model.set({
+        presentation: data
+      });
+      _.each(this.model.get('presentation').slides, function(slide, index) {
+        var milli, t;
+        milli = 0;
+        t = slide.time_till.split(':');
+        milli += t[1] * 1000;
+        milli += t[0] * 60000;
+        console.log(milli);
+        slide.time_till_milli = milli;
+        slide.index = index;
+      });
+      console.log(this.model.toJSON());
+      this.$('.presentation').html(oscillate.Templates.presentation(this.model.toJSON()));
+      this.showSlide(0);
+    },
+    showSlide: function(n) {
+      this.$('.presentation .slide').removeClass('visible');
+      this.$(".presentation .slide[data-index='" + n + "']").addClass('visible');
+      this.currentSlide = this.model.get('presentation').slides[n];
     },
     initPlayer: function() {
       var _this = this;
@@ -34,7 +70,7 @@
       this.$('.play-pause').unbind('click', this.play);
       this.$('.play-pause').bind('click', this.togglePlayback);
       this.interviewSC.play();
-      this.int = setInterval(this.playback, 300);
+      this.int = setInterval(this.playback, 500);
     },
     togglePlayback: function(e) {
       var $el;
@@ -49,8 +85,13 @@
       }
     },
     playback: function() {
-      var minutes, position, seconds, x;
+      var minutes, position, seconds, slide, x,
+        _this = this;
       position = this.interviewSC.position;
+      slide = _.find(this.model.get('presentation').slides, function(slide) {
+        return position < slide.time_till_milli;
+      });
+      if (this.currentSlide !== slide) this.showSlide(slide.index);
       x = position / 1000;
       seconds = x % 60 | 0;
       x /= 60;

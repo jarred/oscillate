@@ -32,18 +32,44 @@ article > #av{
   margin: 20px 0px;
   height: 600px;
   > .presentation{
-    position: absolute;
+    position: relative;
     top: 0px;
     right: 0px;
     left: 0px;
     height: 560px;
     background: #222;
     z-index: 1;
+    color: #FFF;
+    > .slide{
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      > .image{
+        $margin: 10px;
+        position: absolute;
+        left: $margin;
+        top: $margin;
+        bottom: $margin;
+        right: $margin;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: top left;
+      }
+      &.visible{
+        width: auto;
+        height: auto;
+        opacity: 1;
+        right: 0px;
+        bottom: 0px;
+      }
+    }
   }
   > .controls{
     height: 40px;
     position: absolute;
-    border-top: 1px solid #DDD;
     left: 0px;
     right: 0px;
     bottom: 0px;
