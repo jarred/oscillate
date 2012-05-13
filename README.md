@@ -15,7 +15,7 @@ The first section of the file sets up a few things, and should look something li
 title: Title of the post
 layout: audio (currently only audio is supported)
 excerpt: This is displayed on the homepage and in the RSS file
-interview: /tracks/36137744 (this is a soundcloud track ID)
+interview: 36137744 (this is a soundcloud track ID)
 slides: /json/2012-05-13-stamps.json (this is a json file containing the images and timing info)
 ---
 ```
