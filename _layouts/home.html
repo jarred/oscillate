@@ -22,7 +22,7 @@
   <div id="all">
     {% include header.html %}
 
-    <section id="posts">
+    <section id="posts" class="extend" data-view="Home">
       {% for post in site.posts %}
         <div class="post">
           <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>

@@ -11,7 +11,7 @@
       _.bindAll(this);
       this.$el = $(this.el);
       this.model = new Backbone.Model(JSON.parse(this.$('pre.json').html()));
-      this.initPlayer();
+      SC.whenStreamingReady(this.initPlayer);
     },
     initSlides: function() {
       var _this = this;

@@ -6,8 +6,8 @@ oscillate.Views.Audio = Backbone.View.extend
     _.bindAll @
     @$el = $(@el)
     @model = new Backbone.Model JSON.parse @$('pre.json').html()
-    # SC.whenStreamingReady @initPlayer
-    @initPlayer()
+    SC.whenStreamingReady @initPlayer
+    # @initPlayer()
     return
 
   initSlides: ->
