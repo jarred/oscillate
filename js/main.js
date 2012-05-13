@@ -3,10 +3,14 @@
 
   oscillate = window.Oscillate || (window.Oscillate = {});
 
+  oscillate.Data || (oscillate.Data = {});
+
+  oscillate.Data.soundCloudClientID = "d47b942351e59deb9ec38d90a15beb81";
+
   oscillate.Main = {
     init: function() {
       SC.initialize({
-        client_id: "d47b942351e59deb9ec38d90a15beb81"
+        client_id: oscillate.Data.soundCloudClientID
       });
       oscillate.appModel = new Backbone.Model();
       this.extendViews();

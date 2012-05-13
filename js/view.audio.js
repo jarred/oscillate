@@ -12,7 +12,6 @@
       this.$el = $(this.el);
       this.model = new Backbone.Model(JSON.parse(this.$('pre.json').html()));
       this.initPlayer();
-      this.initSlides();
     },
     initSlides: function() {
       var _this = this;
@@ -52,21 +51,13 @@
       var _this = this;
       SC.stream(this.model.get('interview'), function(sound) {
         _this.interviewSC = sound;
-        _this.ready();
+        _this.initSlides();
       });
     },
     ready: function() {
-      var ok;
-      ok = 0;
-      if (this.interviewSC != null) {
-        this.$el.removeClass('loading');
-        ok++;
-      }
-      if (this.model.get('presentation') != null) ok++;
-      if (ok > 1) {
-        this.$('.play-pause').addClass('paused');
-        this.$('.play-pause').bind('click', this.play);
-      }
+      this.$el.removeClass('loading');
+      this.$('.play-pause').addClass('paused');
+      this.$('.play-pause').bind('click', this.play);
     },
     play: function(e) {
       e.preventDefault();
@@ -89,18 +80,10 @@
       }
     },
     playback: function() {
-      var minutes, position, seconds, slide, x,
+      var position, slide,
         _this = this;
       position = this.interviewSC.position;
-      x = position / 1000;
-      seconds = x % 60 | 0;
-      x /= 60;
-      minutes = x % 60 | 0;
-      seconds = String(seconds);
-      minutes = String(minutes);
-      if (seconds.length <= 1) seconds = "0" + seconds;
-      if (minutes.length <= 1) minutes = "0" + minutes;
-      this.$('.time').html("" + minutes + ":" + seconds);
+      this.$('.time').html("" + (SC.Helper.millisecondsToHMS(position).replace('.', ':')));
       slide = _.find(this.model.get('presentation').slides, function(slide) {
         return position < slide.time_till_milli;
       });

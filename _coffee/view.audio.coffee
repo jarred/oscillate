@@ -8,7 +8,6 @@ oscillate.Views.Audio = Backbone.View.extend
     @model = new Backbone.Model JSON.parse @$('pre.json').html()
     # SC.whenStreamingReady @initPlayer
     @initPlayer()
-    @initSlides()    
     return
 
   initSlides: ->
@@ -48,20 +47,14 @@ oscillate.Views.Audio = Backbone.View.extend
   initPlayer: ->
     SC.stream @model.get('interview'), (sound) =>
       @interviewSC = sound
-      @ready()
+      @initSlides()
       return
     return
 
   ready: ->
-    ok = 0
-    if @interviewSC?
-      @$el.removeClass 'loading'
-      ok++
-    if @model.get('presentation')?
-      ok++
-    if ok > 1
-      @$('.play-pause').addClass 'paused'
-      @$('.play-pause').bind 'click', @play
+    @$el.removeClass 'loading'
+    @$('.play-pause').addClass 'paused'
+    @$('.play-pause').bind 'click', @play
     return
 
   play: (e) ->
@@ -87,17 +80,7 @@ oscillate.Views.Audio = Backbone.View.extend
 
   playback: ->
     position = @interviewSC.position
-    x = position / 1000
-    seconds = x % 60 | 0
-    x /= 60
-    minutes = x % 60 | 0
-    seconds = String(seconds)
-    minutes = String(minutes)
-    if seconds.length <= 1
-      seconds = "0#{seconds}"
-    if minutes.length <= 1
-      minutes = "0#{minutes}"
-    @$('.time').html "#{minutes}:#{seconds}"
+    @$('.time').html "#{SC.Helper.millisecondsToHMS(position).replace('.', ':')}"
 
     slide = _.find @model.get('presentation').slides, (slide) =>
       return position < slide.time_till_milli
