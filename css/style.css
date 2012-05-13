@@ -58,12 +58,17 @@ legend {
   color: #000; }
 
 html {
-  font: 400 12px/18px "Geneva", Sans-Serif;
+  font: 400 12px/18px Sans-Serif;
   letter-spacing: 1px; }
 
 .json,
 .hide {
   display: none; }
+
+a {
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
 
 body > #all {
   position: relative;
@@ -134,6 +139,11 @@ article > #av {
   article > #av.loading a.play-pause {
     background: url("../images/loading.audio.gif") no-repeat center center !important; }
 
+article > h1 {
+  font: 500 26px/30px "Helvetica Neue", Sans-Serif;
+  letter-spacing: 0px;
+  margin-bottom: 10px; }
+
 article > .footnotes {
   font: 400 11px/18px "monaco", monospace;
   letter-spacing: 0px;
@@ -148,3 +158,19 @@ article > .footnotes {
     display: inline; }
   article > .footnotes a[rev="footnote"] {
     display: inline; }
+
+#posts > .post {
+  margin-bottom: 40px; }
+  #posts > .post > h2 {
+    font: 500 26px/30px "Helvetica Neue", Sans-Serif;
+    letter-spacing: 0px;
+    margin-bottom: 10px; }
+    #posts > .post > h2 > a {
+      color: #000; }
+  #posts > .post > p.excerpt {
+    width: 400px;
+    margin-bottom: 10px; }
+  #posts > .post > span.date {
+    font-size: 10px; }
+    #posts > .post > span.date > a {
+      color: #AAA; }
