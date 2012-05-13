@@ -111,3 +111,18 @@ article > #av {
       line-height: 40px; }
   article > #av.loading a.play-pause {
     background: url("../images/loading.audio.gif") no-repeat center center !important; }
+
+article > .footnotes {
+  font: 400 11px/18px "monaco", monospace;
+  letter-spacing: 0px;
+  width: 500px;
+  padding-top: 15px;
+  margin: 40px 0px;
+  border-top: 1px dotted #AAA;
+  color: #AAA; }
+  article > .footnotes > hr {
+    display: none; }
+  article > .footnotes p {
+    display: inline; }
+  article > .footnotes a[rev="footnote"] {
+    display: inline; }
